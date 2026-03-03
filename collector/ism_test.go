@@ -38,8 +38,8 @@ func TestISM(t *testing.T) {
 			want: `
 				# HELP elasticsearch_ism_index_failed Whether ISM is currently in a failed step/action for the index (OpenSearch Index State Management)
 				# TYPE elasticsearch_ism_index_failed gauge
-				elasticsearch_ism_index_failed{action="rollover",index="test-logs-001",policy_id="test-lifecycle-policy",state="hot",step="attempt_rollover",step_status="starting"} 0
-				elasticsearch_ism_index_failed{action="allocation",index="test-logs-002",policy_id="test-lifecycle-policy",state="warm",step="attempt_allocation",step_status="failed"} 1
+				elasticsearch_ism_index_failed{index="test-logs-001",policy_id="test-lifecycle-policy"} 0
+				elasticsearch_ism_index_failed{index="test-logs-002",policy_id="test-lifecycle-policy"} 1
 				# HELP elasticsearch_ism_index_status Status of ISM policy for index (OpenSearch Index State Management)
 				# TYPE elasticsearch_ism_index_status gauge
 				elasticsearch_ism_index_status{action="rollover",index="test-logs-001",policy_id="test-lifecycle-policy",state="hot",step="attempt_rollover",step_status="starting"} 1
@@ -110,8 +110,8 @@ func TestISM_FallbackOpendistroEndpoint(t *testing.T) {
 	want := `
 		# HELP elasticsearch_ism_index_failed Whether ISM is currently in a failed step/action for the index (OpenSearch Index State Management)
 		# TYPE elasticsearch_ism_index_failed gauge
-		elasticsearch_ism_index_failed{action="rollover",index="test-logs-001",policy_id="test-lifecycle-policy",state="hot",step="attempt_rollover",step_status="starting"} 0
-		elasticsearch_ism_index_failed{action="allocation",index="test-logs-002",policy_id="test-lifecycle-policy",state="warm",step="attempt_allocation",step_status="failed"} 1
+		elasticsearch_ism_index_failed{index="test-logs-001",policy_id="test-lifecycle-policy"} 0
+		elasticsearch_ism_index_failed{index="test-logs-002",policy_id="test-lifecycle-policy"} 1
 		# HELP elasticsearch_ism_index_status Status of ISM policy for index (OpenSearch Index State Management)
 		# TYPE elasticsearch_ism_index_status gauge
 		elasticsearch_ism_index_status{action="rollover",index="test-logs-001",policy_id="test-lifecycle-policy",state="hot",step="attempt_rollover",step_status="starting"} 1

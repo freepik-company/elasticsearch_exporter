@@ -36,13 +36,13 @@ var (
 	ismIndexFailed = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "ism_index", "failed"),
 		"Whether ISM is currently in a failed step/action for the index (OpenSearch Index State Management)",
-		[]string{"index", "policy_id", "state", "action", "step", "step_status"},
+		[]string{"index", "policy_id"},
 		nil,
 	)
 )
 
 func init() {
-	registerCollector("ism", defaultEnabled, NewISM)
+	registerCollector("ism", defaultDisabled, NewISM)
 }
 
 type ISM struct {
@@ -163,7 +163,7 @@ func (c *ISM) Update(ctx context.Context, ch chan<- prometheus.Metric) error {
 			ismIndexFailed,
 			prometheus.GaugeValue,
 			bool2Float(failed),
-			indexName, policyID, stateName, actionName, stepName, stepStatus,
+			indexName, policyID,
 		)
 	}
 
