@@ -122,4 +122,3 @@ func TestISM_FallbackOpendistroEndpoint(t *testing.T) {
 		t.Fatal(err)
 	}
 }
-
