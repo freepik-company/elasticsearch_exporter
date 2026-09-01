@@ -1,7 +1,19 @@
-FROM golang:1.25 AS builder
+# La etapa de compilacion corre en la arquitectura del runner (BUILDPLATFORM) y
+# cross-compila al destino con GOOS/GOARCH, en vez de emular el toolchain con
+# QEMU para cada plataforma.
+FROM --platform=$BUILDPLATFORM golang:1.25 AS builder
 
-ARG TARGETOS=linux
-ARG TARGETARCH=amd64
+# OJO: se redeclaran SIN valor por defecto a proposito. BuildKit define TARGETOS
+# y TARGETARCH en el ambito global y solo los inyecta en la etapa si se
+# redeclaran vacios; con un valor por defecto gana ese valor y la inyeccion no
+# ocurre.
+#
+# Con `ARG TARGETARCH=amd64` el workflow construia las dos plataformas que pide
+# `platforms: linux/amd64,linux/arm64`, pero ambas compilaban con GOARCH=amd64.
+# La imagen publicaba un manifest con arm64 que dentro llevaba un binario x86_64,
+# y el contenedor moria en nodos ARM con "exec format error".
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /src
 COPY go.mod go.sum ./
